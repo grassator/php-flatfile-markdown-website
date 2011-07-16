@@ -1,0 +1,284 @@
+<?php
+/*
+ * MarkEngine - a simple preprocessor for markdown-based websites
+ *
+ * (c) 2011 Dmitriy Kubyshkin <dmitriy@kubyshkin.ru>
+ * http://markengine.kubyshkin.ru/
+ */
+
+/**
+ * This class handles all request processing.
+ * @package    MarkEngine
+ * @author     Dmitriy Kubyshkin <dmitriy@kubyshkin.ru>
+ */
+class MarkEngine 
+{
+  /**
+   * Holds path to page templates.
+   * @var string
+   */
+  protected $templatesPath = '/templates';
+
+  /**
+   * Holds path to pages.
+   * @var string
+   */
+  protected $pagesPath = '/pages';
+
+  /**
+   * Holds absolute path to MarkEngine files on server.
+   * @var string
+   */
+  protected $rootPath;
+
+  /**
+   * Holds request uri without query string.
+   * @var string
+   */
+  protected $requestUri;
+
+  /**
+   * Holds current page title.
+   * @var string
+   */
+  protected $metaTitle = '';
+
+  /**
+   * Holds meta keywords for current page.
+   * @var string
+   */
+  protected $metaKeywords = '';
+
+  /**
+   * Holds meta keywords for current page.
+   * @var string
+   */
+  protected $metaDescription = '';
+
+  /**
+   * Constructs MarkEngine object.
+   */
+  public function __construct()
+  {
+    // Preparing necessary paths
+    $this->rootPath = dirname($_SERVER['SCRIPT_FILENAME']);
+    $this->requestUri = str_replace(
+      '?'.$_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']
+    );
+  }
+
+  /**
+   * Starts request processing.
+   * @return void
+   */
+  public function start()
+  {
+    $requestUri = $this->requestUri;
+    // If user requested directory index we show index.md file in that folder
+    if($requestUri[strlen($requestUri) - 1] == '/')
+    {
+      $requestUri .= 'index.md';
+    }
+    else // Else replacing extension sent in request to .md
+    {
+      $requestUri = preg_replace(
+        '/^(.+\.)(php|html?)$/', '$1md', $requestUri
+      );
+    }
+
+    if(file_exists($page = $this->absolutePagesPath() . $requestUri))
+    {
+      $this->renderPage($page);
+    }
+    else
+    {
+      $this->error404();
+    }
+  }
+
+  /**
+   * Shows error 404 page. If 404.html is present either in templates path
+   * or pages path it will be rendered. Otherwise a simple page will be shown.
+   * @return void
+   */
+  protected function error404()
+  {
+    // If there was an error and headers were already sent we don't want
+    // another php notice shown about already sent headers
+    if(!headers_sent())
+    {
+      header("HTTP/1.0 404 Not Found");
+    }
+
+    // Searching for user-provided 404 page
+    if(file_exists($page = $this->absoluteTemplatesPath() . '/404.html'))
+    {
+      include $page;
+    }
+    elseif(file_exists($page = $this->absolutePagesPath() . '/404.html'))
+    {
+      include $page;
+    }
+    else // If not found rendering simple one.
+    {
+      echo "<h1>Error 404</h1><p>Requested page not found.</p>";
+    }
+  }
+
+  /**
+   * Renders page. Accepts path to existing markdown file.
+   * @param string $page
+   * @return void
+   */
+  protected function renderPage($page)
+  {
+    // Transforming page from markdown to html
+    require_once dirname(__FILE__) . '/markdown.php';
+    $markdown = new Markdown_Parser();
+    $content = $markdown->transform(file_get_contents($page));
+
+    if(!empty($markdown->document_title))
+    {
+      $this->metaTitle = $markdown->document_title.' | '.$this->metaTitle;
+    }
+
+    // Outputting header template if present
+    if(file_exists($header = $this->absoluteTemplatesPath() . '/header.php'))
+    {
+      include $header;
+    }
+
+    echo $content;
+
+    // Outputting footer template if present
+    if(file_exists($footer = $this->absoluteTemplatesPath() . '/footer.php'))
+    {
+      include $footer;
+    }
+  }
+
+  /**
+   * Sets meta description for current page.
+   * @param string $metaDescription
+   */
+  public function setMetaDescription($metaDescription)
+  {
+    $this->metaDescription = $metaDescription;
+  }
+
+  /**
+   * Returns meta description for current page.
+   * @return string
+   */
+  public function metaDescription()
+  {
+    return $this->metaDescription;
+  }
+
+  /**
+   * Sets meta description for current page.
+   * @param string $metaKeywords
+   */
+  public function setMetaKeywords($metaKeywords)
+  {
+    $this->metaKeywords = $metaKeywords;
+  }
+
+  /**
+   * Returns meta keywords for current page.
+   * @return string
+   */
+  public function metaKeywords()
+  {
+    return $this->metaKeywords;
+  }
+
+  /**
+   * Sets current page title.
+   * @param string $metaTitle
+   */
+  public function setMetaTitle($metaTitle)
+  {
+    $this->metaTitle = $metaTitle;
+  }
+
+  /**
+   * Returns current page title.
+   * @return string
+   */
+  public function metaTitle()
+  {
+    return $this->metaTitle;
+  }
+
+  /**
+   * Sets templates path relative to the engine root.
+   * @param string $templatesPath
+   */
+  public function setTemplatesPath($templatesPath)
+  {
+    $this->templatesPath = $templatesPath;
+  }
+
+  /**
+   * Returns templates path relative to the engine root.
+   * @return string
+   */
+  public function templatesPath()
+  {
+    return $this->templatesPath;
+  }
+
+  /**
+   * Returns absolute path to templates.
+   * @return string
+   */
+  public function absoluteTemplatesPath()
+  {
+    return $this->rootPath . $this->templatesPath;
+  }
+
+  /**
+   * Sets pages path relative to the engine root.
+   * @param string $pagesPath
+   */
+  public function setPagesPath($pagesPath)
+  {
+    $this->pagesPath = $pagesPath;
+  }
+
+  /**
+   * Returns pages path relative to the engine root.
+   * @return string
+   */
+  public function pagesPath()
+  {
+    return $this->pagesPath;
+  }
+
+  /**
+   * Returns absolute path to pages.
+   * @return string
+   */
+  public function absolutePagesPath()
+  {
+    return $this->rootPath . $this->pagesPath;
+  }
+
+  /**
+   * Returns request uri without query string.
+   * @return string
+   */
+  public function requestUri()
+  {
+    return $this->requestUri;
+  }
+
+  /**
+   * @return string
+   */
+  public function rootPath()
+  {
+    return $this->rootPath;
+  }
+}
