@@ -1,8 +1,15 @@
 # Welcome to MarkEngine Demo
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+## So what's MarkEngine? 
 
-* List Item
-* Another One with a [link to section](/section/)
+Markengine is a simple Markdown-based website engine. It's main goal is to
+provide simple means of updating small static websites without necessity of
+learning html while keeping page look consistent.
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+## What's Markdown anyway?
+
+Markdown is a simple markup language created by John Gruber. You can learn more about markdown on [his website](http://daringfireball.net/projects/markdown/).
+
+## Where can I get it?
+
+MarkEngine is available on [github](http://github.com/grassator/markengine/). It's distributed under permissive BSD-style license.

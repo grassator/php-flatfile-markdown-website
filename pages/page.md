@@ -1,10 +1,13 @@
-# Simple page
+@title Custom Title
+@keywords markengine, custom keywords
+@description This page contains custom meta information
 
-This is a **nice** image ![icon](/images/page.png)
+This page doesn't contain any headers so there's nothing that can be used as html page title.
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-* List Item
-* Another One
-
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+To fix that MarkEngine has support for custom meta information (title, keywords, description). It can be specified rigth inside markdown document by using @ keywrods like this:
+  
+    @title Custom Title
+    @keywords markengine, custom keywords
+    @description This page contains custom meta information
+  
+These keywords get parsed only when they are placed on single line and at the beginning of that line.

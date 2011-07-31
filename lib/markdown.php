@@ -29,22 +29,6 @@ define( 'MARKDOWN_VERSION',  "1.0.1n" ); # Sat 10 Oct 2009
 
 @define( 'MARKDOWN_PARSER_CLASS',  'Markdown_Parser' );
 
-function Markdown($text) {
-#
-# Initialize the parser and return the result of its transform method.
-#
-	# Setup static parser variable.
-	static $parser;
-	if (!isset($parser)) {
-		$parser_class = MARKDOWN_PARSER_CLASS;
-		$parser = new $parser_class;
-	}
-
-	# Transform text using parser.
-	return $parser->transform($text);
-}
-
-
 #
 # Markdown Parser Class
 #

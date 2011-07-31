@@ -38,10 +38,16 @@ class MarkEngine
   protected $requestUri;
 
   /**
+   * Holds default page title.
+   * @var string
+   */
+  protected $defaultTitle = '';
+
+  /**
    * Holds current page title.
    * @var string
    */
-  protected $metaTitle = '';
+  protected $currentTitle = '';
 
   /**
    * Holds meta keywords for current page.
@@ -135,11 +141,15 @@ class MarkEngine
     // Transforming page from markdown to html
     require_once dirname(__FILE__) . '/markdown.php';
     $markdown = new Markdown_Parser();
-    $content = $markdown->transform(file_get_contents($page));
+    $content = file_get_contents($page);
+    $content = $this->parseMeta($content);
+    $content = $markdown->transform($content);
 
-    if(!empty($markdown->document_title))
+    // If there wasn't specified custom title inside document or otherwise
+    // we and there was a header inside a document we use it
+    if(empty($this->currentTitle) && !empty($markdown->document_title))
     {
-      $this->metaTitle = $markdown->document_title.' | '.$this->metaTitle;
+      $this->currentTitle = $markdown->document_title;
     }
 
     // Outputting header template if present
@@ -155,6 +165,37 @@ class MarkEngine
     {
       include $footer;
     }
+  }
+
+  /**
+   * Parses meta data specified inside document.
+   * @param string $content
+   * @return string
+   */
+  protected function parseMeta($content)
+  {
+    $pattern = '/^\@(\w+) (.+)$/m';
+    return preg_replace_callback($pattern, array($this, 'parseMetaCallback'), $content);
+  }
+
+  /**
+   * Replaces meta data with empty string so the don't get parsed with markdown.
+   * @param array $matches
+   * @return string
+   */
+  protected function parseMetaCallback($matches)
+  {
+    switch($matches[1])
+    {
+      case 'title':
+        $this->setCurrentTitle($matches[2]);
+        break;
+      case 'keywords':
+        $this->setMetaKeywords($matches[2]);
+      case 'description':
+        $this->setMetaDescription($matches[2]);
+    }
+    return '';
   }
 
   /**
@@ -194,21 +235,55 @@ class MarkEngine
   }
 
   /**
-   * Sets current page title.
+   * Sets default page title.
    * @param string $metaTitle
    */
-  public function setMetaTitle($metaTitle)
+  public function setDefaultTitle($metaTitle)
   {
-    $this->metaTitle = $metaTitle;
+    $this->defaultTitle = $metaTitle;
   }
 
   /**
-   * Returns current page title.
+   * Returns default page title.
+   * @return string
+   */
+  public function defaultTitle()
+  {
+    return $this->defaultTitle;
+  }
+
+  /**
+   * Sets default page title.
+   * @param string $metaTitle
+   */
+  public function setCurrentTitle($metaTitle)
+  {
+    $this->currentTitle = $metaTitle;
+  }
+
+  /**
+   * Returns default page title.
+   * @return string
+   */
+  public function currentTitle()
+  {
+    return $this->currentTitle;
+  }
+
+  /**
+   * Returns full page title.
    * @return string
    */
   public function metaTitle()
   {
-    return $this->metaTitle;
+    if(!empty($this->defaultTitle))
+    {
+      return $this->currentTitle.' | '.$this->defaultTitle();
+    }
+    else
+    {
+      return $this->currentTitle();
+    }
   }
 
   /**
