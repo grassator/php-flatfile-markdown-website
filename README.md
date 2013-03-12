@@ -8,8 +8,7 @@ Demo is available [here](http://markengine.kubyshkin.ru)
 
 ## Installation
 
-To install engine simply copy all the files to the root of your web server.
-**NOTICE** Markengine will not work from a subfolder.
+To install engine simply copy all the files to your web server.
 
 ## License
 
