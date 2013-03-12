@@ -69,7 +69,9 @@ class MarkEngine
     // Preparing necessary paths
     $this->rootPath = dirname($_SERVER['SCRIPT_FILENAME']);
     $this->baseUri = str_replace($_SERVER['DOCUMENT_ROOT'], '',$this->rootPath);
-    $this->baseUri = '/'.trim($this->baseUri, '/');
+    if($this->baseUri) {
+    	$this->baseUri = '/'.trim($this->baseUri, '/');
+    }
     $this->requestUri = str_replace(
       '?'.$_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']
     );
