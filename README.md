@@ -1,3 +1,7 @@
+> **WARNING**: this repository is no longer maintained.
+
+> If you are looking for a good markdown-based CMS please consider my commercial product — [MarkEngine](http://kubyshkin.ru/markengine/) which is a idealogical successor of this effort.
+
 # PHP Flat-file Markdown Website
 
 This is a simple Markdown-based website engine. It's main goal is to
@@ -6,7 +10,7 @@ learning html while keeping page look consistent.
 
 ## Installation
 
-To install engine simply copy all the files to your web server.
+To install simply copy all the files to your web server.
 
 ## License
 
