@@ -1,10 +1,10 @@
 <?php
 
-require_once dirname(__FILE__).'/lib/MarkEngine.php';
+require_once dirname(__FILE__).'/lib/PhpFlatFileMarkdownWebsite.php';
 
-$engine = new MarkEngine();
+$engine = new PhpFlatFileMarkdownWebsite();
 
 // Add your configurations below this line but before call to start()
-$engine->setDefaultTitle('MarkEngine Demo');
+$engine->setDefaultTitle('PHP Flat-file Markdown Website Demo');
 
 $engine->start();

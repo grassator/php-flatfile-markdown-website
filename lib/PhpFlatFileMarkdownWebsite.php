@@ -1,17 +1,17 @@
 <?php
 /*
- * MarkEngine - a simple preprocessor for markdown-based websites
+ * PhpFlatFileMarkdownWebsite - a simple preprocessor for markdown-based websites
  *
  * (c) 2011 Dmitriy Kubyshkin <dmitriy@kubyshkin.ru>
- * http://markengine.kubyshkin.ru/
+ * https://github.com/grassator/php-flatfile-markdown-website
  */
 
 /**
  * This class handles all request processing.
- * @package    MarkEngine
+ * @package    PhpFlatFileMarkdownWebsite
  * @author     Dmitriy Kubyshkin <dmitriy@kubyshkin.ru>
  */
-class MarkEngine 
+class PhpFlatFileMarkdownWebsite 
 {
   /**
    * Holds path to page templates.
@@ -26,7 +26,7 @@ class MarkEngine
   protected $pagesPath = '/pages';
 
   /**
-   * Holds absolute path to MarkEngine files on server.
+   * Holds absolute path to files on server.
    * @var string
    */
   protected $rootPath;
@@ -62,7 +62,7 @@ class MarkEngine
   protected $metaDescription = '';
 
   /**
-   * Constructs MarkEngine object.
+   * Constructs core object.
    */
   public function __construct()
   {

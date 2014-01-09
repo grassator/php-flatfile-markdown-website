@@ -1,8 +1,8 @@
-# Welcome to MarkEngine Demo
+# Welcome to PHP Flat-file Markdown Website
 
-## So what's MarkEngine? 
+## So what's this? 
 
-Markengine is a simple Markdown-based website engine. It's main goal is to
+It is a Markdown-based website engine. It's main goal is to
 provide simple means of updating small static websites without necessity of
 learning html while keeping page look consistent.
 
@@ -12,4 +12,4 @@ Markdown is a simple markup language created by John Gruber. You can learn more 
 
 ## Where can I get it?
 
-MarkEngine is available on [github](http://github.com/grassator/markengine/). It's distributed under permissive BSD-style license.
+PHP Flat-file Markdown Website is available on [github](http://github.com/grassator/php-flatfile-markdown-website/). It's distributed under permissive BSD-style license.

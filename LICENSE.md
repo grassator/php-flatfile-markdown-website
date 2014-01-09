@@ -1,4 +1,4 @@
-MarkEngine
+PHP Flat-file Markdown Website
 Copyright (c) 2011 Dmitriy Kubyshkin  
 <http://kubyshkin.ru/>  
 All rights reserved.
@@ -14,9 +14,9 @@ met:
   notice, this list of conditions and the following disclaimer in the
   documentation and/or other materials provided with the distribution.
 
-* Neither the name "MarkEngine" nor the names of its contributors may
-  be used to endorse or promote products derived from this software
-  without specific prior written permission.
+* Neither the name "PHP Flat-file Markdown Website" nor the names of
+  its contributors may be used to endorse or promote products derived
+  from this software without specific prior written permission.
 
 This software is provided by the copyright holders and contributors "as
 is" and any express or implied warranties, including, but not limited
